@@ -1,16 +1,16 @@
 package com.qiangxi.developmentsample.net;
 
+import com.orhanobut.logger.Logger;
 import com.qiangxi.developmentsample.entity.QueryResult;
 import com.qiangxi.developmentsample.presenter.UserInfoPresenter;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
 /**
  * Created by qiang_xi on 2017/4/4 16:45.
  * 单例模式+策略模式,使用Retrofit进行http/https请求,
@@ -22,13 +22,20 @@ class RetrofitStrategy {
     private static OkHttpClient mClient;
 
     static {
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+            @Override
+            public void log(String message) {
+                Logger.e(message);
+            }
+        });
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         if (mClient == null) {
             mClient = new OkHttpClient.Builder()
                     .connectTimeout(15, TimeUnit.SECONDS)
                     .readTimeout(15, TimeUnit.SECONDS)
                     .writeTimeout(15, TimeUnit.SECONDS)
                     .retryOnConnectionFailure(false)
-                    .addInterceptor(new LogInterceptor())
+                    .addInterceptor(loggingInterceptor)
                     .build();
         }
         if (mRetrofit == null) {
@@ -64,12 +71,7 @@ class RetrofitStrategy {
 
     static void login(String phoneNumber, String password, final UserInfoPresenter presenter) {
         RetrofitCall<QueryResult<String>> login = mApiService.getSmsValidateCode(phoneNumber);
-        login.enqueue(new RetrofitCallAdapterFactory.SimpleRetrofitCallback<QueryResult<String>>() {
-            @Override
-            public void start() {
-                presenter.onRequestStart();
-            }
-
+        login.enqueue(new RetrofitCallAdapterFactory.SimpleRetrofitCallback<QueryResult<String>>(presenter) {
             @Override
             public void success(Response<QueryResult<String>> response) {
                 QueryResult<String> body = response.body();
@@ -81,41 +83,6 @@ class RetrofitStrategy {
                         presenter.onReLogin();
                     }
                 }
-            }
-
-            @Override
-            public void error() {
-                presenter.onRequestError();
-            }
-
-            @Override
-            public void unauthenticated(Response<?> response) {
-                presenter.onRequestError();
-            }
-
-            @Override
-            public void clientError(Response<?> response) {
-                presenter.onRequestError();
-            }
-
-            @Override
-            public void serverError(Response<?> response) {
-                presenter.onRequestError();
-            }
-
-            @Override
-            public void networkError(IOException e) {
-                presenter.onRequestError();
-            }
-
-            @Override
-            public void unexpectedError(Throwable t) {
-                presenter.onRequestError();
-            }
-
-            @Override
-            public void finish() {
-                presenter.onRequestFinish();
             }
         });
     }

@@ -1,5 +1,7 @@
 package com.qiangxi.developmentsample.net;
 
+import com.qiangxi.developmentsample.presenter.BasePresenter;
+
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
@@ -14,7 +16,7 @@ import retrofit2.Retrofit;
 
 /**
  * Created by qiang_xi on 2017/4/4 21:00.
- * 自定义的CallAdapter.Factory,
+ * 自定义的CallAdapter.Factory
  */
 
 final class RetrofitCallAdapterFactory extends CallAdapter.Factory {
@@ -76,7 +78,6 @@ final class RetrofitCallAdapterFactory extends CallAdapter.Factory {
                     if (code >= 200 && code < 300) {
                         callback.success(response);
                     } else {
-                        callback.error();
                         if (code == 401) {
                             callback.unauthenticated(response);
                         } else if (code >= 400 && code < 500) {
@@ -84,7 +85,7 @@ final class RetrofitCallAdapterFactory extends CallAdapter.Factory {
                         } else if (code >= 500 && code < 600) {
                             callback.serverError(response);
                         } else {
-                            callback.unexpectedError(new RuntimeException("其他异常 " + response));
+                            callback.unexpectedError(new RuntimeException("其他异常: " + response));
                         }
                     }
                     callback.finish();
@@ -109,50 +110,46 @@ final class RetrofitCallAdapterFactory extends CallAdapter.Factory {
     }
 
     static class SimpleRetrofitCallback<T> implements RetrofitCallback<T> {
+        BasePresenter mPresenter;
+
+        SimpleRetrofitCallback(BasePresenter presenter) {
+            mPresenter = presenter;
+        }
 
         @Override
         public void start() {
-
+            mPresenter.onRequestStart();
         }
 
         @Override
         public void success(Response<T> response) {
-
-        }
-
-        @Override
-        public void error() {
-
         }
 
         @Override
         public void unauthenticated(Response<?> response) {
-
         }
 
         @Override
         public void clientError(Response<?> response) {
-
         }
 
         @Override
         public void serverError(Response<?> response) {
-
+            mPresenter.serverError(response);
         }
 
         @Override
         public void networkError(IOException e) {
-
+            mPresenter.networkError(e);
         }
 
         @Override
         public void unexpectedError(Throwable t) {
-
         }
 
         @Override
         public void finish() {
-
+            mPresenter.onRequestFinish();
         }
     }
 }

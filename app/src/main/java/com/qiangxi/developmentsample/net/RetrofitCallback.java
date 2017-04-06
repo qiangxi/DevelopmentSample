@@ -20,10 +20,6 @@ public interface RetrofitCallback<T> {
     void success(Response<T> response);
 
     /**
-     * 所有异常
-     */
-    void error();
-    /**
      * 未认证异常, 错误码 401,
      */
     void unauthenticated(Response<?> response);
