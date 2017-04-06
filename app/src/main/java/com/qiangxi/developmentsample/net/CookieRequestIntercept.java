@@ -1,0 +1,32 @@
+package com.qiangxi.developmentsample.net;
+
+import android.content.Context;
+
+import com.qiangxi.developmentsample.helper.SpHelper;
+
+import java.io.IOException;
+
+import okhttp3.Interceptor;
+import okhttp3.Request;
+import okhttp3.Response;
+
+/**
+ * 作者 任强强 on 2017/4/6 13:47.
+ * 为每次请求添加cookie
+ */
+
+public class CookieRequestIntercept implements Interceptor {
+    private String mCookie;
+
+    public CookieRequestIntercept(Context context) {
+        mCookie = SpHelper.getCookie(context.getApplicationContext());
+    }
+
+    @Override
+    public Response intercept(Chain chain) throws IOException {
+        Request originalRequest = chain.request();
+        Request newRequest = originalRequest.newBuilder().
+                header("cookie", mCookie).build();
+        return chain.proceed(newRequest);
+    }
+}

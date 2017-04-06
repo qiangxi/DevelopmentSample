@@ -15,12 +15,9 @@ public class RequestManager {
      * 在退出应用时置空这些静态变量,方便JVM回收,避免内存泄漏
      */
     public static void shutdown() {
-//        RetrofitStrategy.getInstance().shutdown();
         RetrofitStrategy.shutdown();
     }
-
     public static void login(String phoneNumber, String password, UserInfoPresenter presenter) {
-//        RetrofitStrategy.getInstance().login(phoneNumber, password, presenter);
         RetrofitStrategy.login(phoneNumber, password, presenter);
     }
 }

@@ -36,6 +36,7 @@ class RetrofitStrategy {
                     .writeTimeout(15, TimeUnit.SECONDS)
                     .retryOnConnectionFailure(false)
                     .addInterceptor(loggingInterceptor)
+//                    .addInterceptor(new CookieRequestIntercept(this))
                     .build();
         }
         if (mRetrofit == null) {
