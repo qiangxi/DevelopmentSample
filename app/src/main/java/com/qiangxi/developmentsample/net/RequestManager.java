@@ -1,5 +1,8 @@
 package com.qiangxi.developmentsample.net;
 
+
+import android.content.Context;
+
 import com.qiangxi.developmentsample.presenter.UserInfoPresenter;
 
 /**
@@ -17,6 +20,7 @@ public class RequestManager {
     public static void shutdown() {
         RetrofitStrategy.shutdown();
     }
+
     public static void login(String phoneNumber, String password, UserInfoPresenter presenter) {
         RetrofitStrategy.login(phoneNumber, password, presenter);
     }

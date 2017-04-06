@@ -11,6 +11,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 /**
  * Created by qiang_xi on 2017/4/4 16:45.
  * 单例模式+策略模式,使用Retrofit进行http/https请求,
@@ -36,7 +37,6 @@ class RetrofitStrategy {
                     .writeTimeout(15, TimeUnit.SECONDS)
                     .retryOnConnectionFailure(false)
                     .addInterceptor(loggingInterceptor)
-//                    .addInterceptor(new CookieRequestIntercept(this))
                     .build();
         }
         if (mRetrofit == null) {

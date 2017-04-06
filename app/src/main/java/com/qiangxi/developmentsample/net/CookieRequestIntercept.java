@@ -12,7 +12,7 @@ import okhttp3.Response;
 
 /**
  * 作者 任强强 on 2017/4/6 13:47.
- * 为每次请求添加cookie
+ * 为每次请求添加cookie(通过拦截器添加cookie,不用再在每个请求上都添加cookie了,但是这个需要传入上下文,而Context又不太好传入,待定吧...)
  */
 
 public class CookieRequestIntercept implements Interceptor {

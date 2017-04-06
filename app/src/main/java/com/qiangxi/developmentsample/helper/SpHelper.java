@@ -10,13 +10,46 @@ import android.content.SharedPreferences;
  */
 
 public class SpHelper {
-    private static final String mSpName = "AppData";//SharedPreferences名称
+    private static final String SHARE_PREFERENCES_NAME = "AppData";//SharedPreferences名称
+    private static final String FIELD_COOKIE = "cookie";//cookie字段
+    private static final String FIELD_DEVICE_ID = "deviceId";//deviceId字段
 
     private SpHelper() {
     }
 
+    /**
+     * 获取cookie
+     */
     public static String getCookie(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(mSpName, Context.MODE_PRIVATE);
-        return sp.getString("cookie", null);
+        SharedPreferences sp = context.getSharedPreferences(SHARE_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        String cookie = sp.getString(FIELD_COOKIE, null);
+        String deviceId = getDeviceId(context);
+        StringBuilder sb = new StringBuilder();
+        sb.append("cookieDeviceId").append("=").append(deviceId).append(";").append(cookie);
+        return sb.toString();
+    }
+
+    /**
+     * 保存cookie
+     */
+    public static void saveCookie(Context context, String cookie) {
+        SharedPreferences sp = context.getSharedPreferences(SHARE_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        sp.edit().putString(FIELD_COOKIE, cookie).apply();
+    }
+
+    /**
+     * 获取deviceId
+     */
+    public static String getDeviceId(Context context) {
+        SharedPreferences sp = context.getSharedPreferences(SHARE_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        return sp.getString(FIELD_DEVICE_ID, null);
+    }
+
+    /**
+     * 保存deviceId
+     */
+    public static void saveDeviceId(Context context, String deviceId) {
+        SharedPreferences sp = context.getSharedPreferences(SHARE_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        sp.edit().putString(FIELD_DEVICE_ID, deviceId).apply();
     }
 }
