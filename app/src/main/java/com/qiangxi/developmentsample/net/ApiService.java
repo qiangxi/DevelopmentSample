@@ -4,6 +4,7 @@ import com.qiangxi.developmentsample.entity.QueryResult;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 /**
@@ -14,5 +15,5 @@ import retrofit2.http.POST;
 interface ApiService {
     @FormUrlEncoded
     @POST(Api.VALIDATE_CODE)
-    RetrofitCall<QueryResult<String>>  getSmsValidateCode(@Field("customerPhone") String customerPhone);
+    RetrofitCall<QueryResult<String>> getSmsValidateCode(@Header("cookie") String cookie, @Field("customerPhone") String customerPhone);
 }

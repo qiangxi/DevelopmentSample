@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by qiang_xi on 2017/4/4 16:45.
- * 单例模式+策略模式,使用Retrofit进行http/https请求,
+ * 策略模式,使用Retrofit进行http/https请求,
  */
 
 class RetrofitStrategy {
@@ -70,8 +70,8 @@ class RetrofitStrategy {
         }
     }
 
-    static void login(String phoneNumber, String password, final UserInfoPresenter presenter) {
-        RetrofitCall<QueryResult<String>> login = mApiService.getSmsValidateCode(phoneNumber);
+    static void login(String cookie, String phoneNumber, String password, final UserInfoPresenter presenter) {
+        RetrofitCall<QueryResult<String>> login = mApiService.getSmsValidateCode(cookie, phoneNumber);
         login.enqueue(new RetrofitCallAdapterFactory.SimpleRetrofitCallback<QueryResult<String>>(presenter) {
             @Override
             public void success(Response<QueryResult<String>> response) {

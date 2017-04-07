@@ -1,24 +1,7 @@
 ## 规范
-#### 命名
-1. 静态常量命名:
-```java
-public static final String EVENT_BUS_ACTION_1 = "EVENT_BUS_ACTION_1";
-```
-2. 普通常量命名:
-```java
-//类成员常量
-public String mEventBusAction1 = "mEventBusAction1";
-/局部成员常量
-public String eventBusAction1 = "eventBusAction1";
-```
-3. 变量命名:
-```java
-//类成员变量
-public String mEventBusAction1;
-/局部成员变量
-public String eventBusAction1;
-```
-## 要求
+#### 编程规范,异常日志,安全规约等全部按照<<阿里巴巴Java开发手册(正式版)>>中要求的实施.
+
+## 公司内部要求
 1. 采用 MVC(中小型) / MVP(大型) 架构进行开发
 2. 单进程下的各组件间通信,除了页面跳转/开启服务等必须使用Intent的地方,其他地方尽量使用EventBus事件总线进行消息的传递,降低代码间耦合
 度,比如Service与Activity的通信,线程间通信,Activity与Fragment通信,Receiver与Service或Activity通信等.每个EventBus接收方法都必须
@@ -36,3 +19,8 @@ public String eventBusAction1;
     - Okhttp / Retrofit(网络请求框架,必备)
     - Gson(json转换框架,必备)
     - EventBus(事件总线,必备)
+
+
+    不同项目有不同的具体需求的,可自行编写框架(或library)或从github中搜索.
+    自行编写的框架(或library)必须保证无内存泄露代码,良好的扩展性,移植性,低耦合性等
+    github中搜索的要做好功能和性能评估,且尽量选择包体积较小的.

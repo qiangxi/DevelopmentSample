@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.qiangxi.developmentsample.base.BaseActivity;
+import com.qiangxi.developmentsample.helper.SpHelper;
+import com.qiangxi.developmentsample.helper.ToastHelper;
 import com.qiangxi.developmentsample.net.RequestManager;
 import com.qiangxi.developmentsample.presenter.UserInfoPresenter;
 
@@ -12,6 +14,7 @@ import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Response;
 
 public class MainActivity extends BaseActivity implements UserInfoPresenter {
@@ -20,6 +23,7 @@ public class MainActivity extends BaseActivity implements UserInfoPresenter {
     TextView mTextView;
 
     private ProgressDialog mDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +44,7 @@ public class MainActivity extends BaseActivity implements UserInfoPresenter {
     }
 
     protected void initData() {
-        RequestManager.login("18894001263", "1234", this);
+        RequestManager.login(SpHelper.getCookie(this), "18894001263", "1234", this);
     }
 
 
@@ -82,5 +86,10 @@ public class MainActivity extends BaseActivity implements UserInfoPresenter {
     public void onReLogin() {
         //重新登录,跳转到登录界面
         mTextView.setText("onReLogin");
+    }
+
+    @OnClick(R.id.textView)
+    public void onClick() {
+        ToastHelper.show(this, "大神大神大所大所大所大所多所大所大所大所大所大所大所大所大所大所大所大所大所大所大所大");
     }
 }

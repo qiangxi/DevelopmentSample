@@ -21,10 +21,10 @@ public class SpHelper {
      * 获取cookie
      */
     public static String getCookie(Context context) {
+        StringBuilder sb = new StringBuilder();
         SharedPreferences sp = context.getSharedPreferences(SHARE_PREFERENCES_NAME, Context.MODE_PRIVATE);
         String cookie = sp.getString(FIELD_COOKIE, null);
         String deviceId = getDeviceId(context);
-        StringBuilder sb = new StringBuilder();
         sb.append("cookieDeviceId").append("=").append(deviceId).append(";").append(cookie);
         return sb.toString();
     }
@@ -40,7 +40,7 @@ public class SpHelper {
     /**
      * 获取deviceId
      */
-    public static String getDeviceId(Context context) {
+    private static String getDeviceId(Context context) {
         SharedPreferences sp = context.getSharedPreferences(SHARE_PREFERENCES_NAME, Context.MODE_PRIVATE);
         return sp.getString(FIELD_DEVICE_ID, null);
     }

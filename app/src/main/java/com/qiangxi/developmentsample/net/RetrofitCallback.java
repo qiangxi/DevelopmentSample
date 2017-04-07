@@ -6,6 +6,7 @@ import retrofit2.Response;
 
 /**
  * Created by qiang_xi on 2017/4/4 20:30.
+ * Retrofit请求回调
  */
 
 public interface RetrofitCallback<T> {

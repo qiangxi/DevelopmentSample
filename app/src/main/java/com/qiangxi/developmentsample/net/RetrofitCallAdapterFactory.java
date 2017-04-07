@@ -1,5 +1,8 @@
 package com.qiangxi.developmentsample.net;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import com.qiangxi.developmentsample.presenter.BasePresenter;
 
 import java.io.IOException;
@@ -13,6 +16,7 @@ import retrofit2.CallAdapter;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
 
 /**
  * Created by qiang_xi on 2017/4/4 21:00.
@@ -55,6 +59,7 @@ final class RetrofitCallAdapterFactory extends CallAdapter.Factory {
     }
 
     private static class MyCallAdapter<T> implements RetrofitCall<T> {
+        private Handler handler = new Handler(Looper.getMainLooper());
         private final Call<T> call;
         private final Executor callbackExecutor;
 
@@ -73,32 +78,40 @@ final class RetrofitCallAdapterFactory extends CallAdapter.Factory {
             callback.start();
             call.enqueue(new Callback<T>() {
                 @Override
-                public void onResponse(Call<T> call, Response<T> response) {
-                    int code = response.code();
-                    if (code >= 200 && code < 300) {
-                        callback.success(response);
-                    } else {
-                        if (code == 401) {
-                            callback.unauthenticated(response);
-                        } else if (code >= 400 && code < 500) {
-                            callback.clientError(response);
-                        } else if (code >= 500 && code < 600) {
-                            callback.serverError(response);
-                        } else {
-                            callback.unexpectedError(new RuntimeException("其他异常: " + response));
+                public void onResponse(Call<T> call, final Response<T> response) {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            int code = response.code();
+                            if (code >= 200 && code < 300) {
+                                callback.success(response);
+                            } else if (code == 401) {
+                                callback.unauthenticated(response);
+                            } else if (code >= 400 && code < 500) {
+                                callback.clientError(response);
+                            } else if (code >= 500 && code < 600) {
+                                callback.serverError(response);
+                            } else {
+                                callback.unexpectedError(new RuntimeException("其他异常: " + response));
+                            }
+                            callback.finish();
                         }
-                    }
-                    callback.finish();
+                    });
                 }
 
                 @Override
-                public void onFailure(Call<T> call, Throwable t) {
-                    if (t instanceof IOException) {
-                        callback.networkError((IOException) t);
-                    } else {
-                        callback.unexpectedError(t);
-                    }
-                    callback.finish();
+                public void onFailure(Call<T> call, final Throwable t) {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (t instanceof IOException) {
+                                callback.networkError((IOException) t);
+                            } else {
+                                callback.unexpectedError(t);
+                            }
+                            callback.finish();
+                        }
+                    });
                 }
             });
         }
@@ -110,7 +123,7 @@ final class RetrofitCallAdapterFactory extends CallAdapter.Factory {
     }
 
     static class SimpleRetrofitCallback<T> implements RetrofitCallback<T> {
-        BasePresenter mPresenter;
+        private BasePresenter mPresenter;
 
         SimpleRetrofitCallback(BasePresenter presenter) {
             mPresenter = presenter;

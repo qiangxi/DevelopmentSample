@@ -20,7 +20,7 @@ public class RequestManager {
     }
 
 
-    public static void login(String phoneNumber, String password, UserInfoPresenter presenter) {
-        RetrofitStrategy.login(phoneNumber, password, presenter);
+    public static void login(String cookie,String phoneNumber, String password, UserInfoPresenter presenter) {
+        RetrofitStrategy.login(cookie,phoneNumber, password, presenter);
     }
 }
