@@ -21,8 +21,12 @@ public class SpHelper {
      * 获取cookie
      */
     public static String getCookie(Context context) {
+        if (context == null) {
+            return null;
+        }
         StringBuilder sb = new StringBuilder();
-        SharedPreferences sp = context.getSharedPreferences(SHARE_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        SharedPreferences sp = context.getApplicationContext()
+                .getSharedPreferences(SHARE_PREFERENCES_NAME, Context.MODE_PRIVATE);
         String cookie = sp.getString(FIELD_COOKIE, null);
         String deviceId = getDeviceId(context);
         sb.append("cookieDeviceId").append("=").append(deviceId).append(";").append(cookie);
@@ -33,7 +37,11 @@ public class SpHelper {
      * 保存cookie
      */
     public static void saveCookie(Context context, String cookie) {
-        SharedPreferences sp = context.getSharedPreferences(SHARE_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        if (context == null) {
+            return;
+        }
+        SharedPreferences sp = context.getApplicationContext()
+                .getSharedPreferences(SHARE_PREFERENCES_NAME, Context.MODE_PRIVATE);
         sp.edit().putString(FIELD_COOKIE, cookie).apply();
     }
 
@@ -41,7 +49,11 @@ public class SpHelper {
      * 获取deviceId
      */
     private static String getDeviceId(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(SHARE_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        if (context == null) {
+            return null;
+        }
+        SharedPreferences sp = context.getApplicationContext()
+                .getSharedPreferences(SHARE_PREFERENCES_NAME, Context.MODE_PRIVATE);
         return sp.getString(FIELD_DEVICE_ID, null);
     }
 
@@ -49,7 +61,11 @@ public class SpHelper {
      * 保存deviceId
      */
     public static void saveDeviceId(Context context, String deviceId) {
-        SharedPreferences sp = context.getSharedPreferences(SHARE_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        if (context == null) {
+            return;
+        }
+        SharedPreferences sp = context.getApplicationContext()
+                .getSharedPreferences(SHARE_PREFERENCES_NAME, Context.MODE_PRIVATE);
         sp.edit().putString(FIELD_DEVICE_ID, deviceId).apply();
     }
 }
