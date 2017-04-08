@@ -2,9 +2,12 @@ package com.qiangxi.developmentsample;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.qiangxi.developmentsample.base.BaseActivity;
+import com.qiangxi.developmentsample.helper.CaseViewHelper;
 import com.qiangxi.developmentsample.helper.SpHelper;
 import com.qiangxi.developmentsample.helper.ToastHelper;
 import com.qiangxi.developmentsample.net.RequestManager;
@@ -21,8 +24,11 @@ public class MainActivity extends BaseActivity implements UserInfoPresenter {
 
     @BindView(R.id.textView)
     TextView mTextView;
+    @BindView(R.id.activity_main)
+    RelativeLayout mActivityMain;
 
     private ProgressDialog mDialog;
+    private boolean isShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +96,16 @@ public class MainActivity extends BaseActivity implements UserInfoPresenter {
 
     @OnClick(R.id.textView)
     public void onClick() {
-        ToastHelper.show(this, "大神大神大所大所大所大所多所大所大所大所大所大所大所大所大所大所大所大所大所大所大所大");
+        if (!isShow) {
+            isShow = true;
+            CaseViewHelper.showNoNetworkView(mActivityMain, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CaseViewHelper.hideCaseView(mActivityMain);
+                    isShow = false;
+                    ToastHelper.show(MainActivity.this, "大神大神大所大所大所大所多所大所大所大所大所大所大所大所大所大所大所大所大所大所大所大");
+                }
+            });
+        }
     }
 }

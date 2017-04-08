@@ -22,6 +22,7 @@ public class ToastHelper {
 
     /**
      * 展示一条短的toast
+     *
      * @param context 上下文
      * @param message 要显示的消息
      */
@@ -31,18 +32,21 @@ public class ToastHelper {
 
     /**
      * 展示一条短的toast
+     *
      * @param context 上下文
-     * @param resId 要显示的消息的资源id
+     * @param resId   要显示的消息的资源id
      */
     public static void show(Context context, int resId) {
         if (context == null) {
             return;
         }
-        show(context, context.getResources().getText(resId), Toast.LENGTH_SHORT);
+        show(context, context.getApplicationContext().getResources().getText(resId),
+                Toast.LENGTH_SHORT);
     }
 
     /**
      * 展示一条长的toast
+     *
      * @param context 上下文
      * @param message 要显示的消息
      */
@@ -52,20 +56,23 @@ public class ToastHelper {
 
     /**
      * 展示一条长的toast
+     *
      * @param context 上下文
-     * @param resId 要显示的消息的资源id
+     * @param resId   要显示的消息的资源id
      */
     public static void showLong(Context context, int resId) {
         if (context == null) {
             return;
         }
-        show(context, context.getResources().getText(resId), Toast.LENGTH_LONG);
+        show(context, context.getApplicationContext().getResources().getText(resId),
+                Toast.LENGTH_LONG);
     }
 
     /**
      * 具体的实现方法
-     * @param context 上下文
-     * @param message 要显示的消息
+     *
+     * @param context  上下文
+     * @param message  要显示的消息
      * @param duration 要显示的时长
      */
     private static void show(Context context, CharSequence message, int duration) {
@@ -75,7 +82,8 @@ public class ToastHelper {
         float scale = context.getApplicationContext().getResources().getDisplayMetrics().density;
         if (mToast == null) {
             mToast = new Toast(context.getApplicationContext());
-            LayoutInflater inflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflate =
+                    (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View toastLayout = inflate.inflate(R.layout.toast_layout, null);
             TextView tv = (TextView) toastLayout.findViewById(R.id.toastLayoutMessage);
             tv.setText(message);
@@ -85,7 +93,8 @@ public class ToastHelper {
             tv.setText(message);
         }
         //底部居中,距离屏幕底部60dp
-        mToast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, (int) ((60 * scale) + 0.5f));
+        mToast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0,
+                (int) ((60 * scale) + 0.5f));
         mToast.setDuration(duration);
         mToast.show();
     }

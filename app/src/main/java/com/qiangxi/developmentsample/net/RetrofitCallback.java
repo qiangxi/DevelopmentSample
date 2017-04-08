@@ -9,7 +9,7 @@ import retrofit2.Response;
  * Retrofit请求回调
  */
 
-public interface RetrofitCallback<T> {
+interface RetrofitCallback<T> {
     /**
      * 请求开始
      */

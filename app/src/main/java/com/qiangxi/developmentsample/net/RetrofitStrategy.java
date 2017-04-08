@@ -1,55 +1,20 @@
 package com.qiangxi.developmentsample.net;
 
-import com.orhanobut.logger.Logger;
 import com.qiangxi.developmentsample.entity.QueryResult;
 import com.qiangxi.developmentsample.presenter.UserInfoPresenter;
 
-import java.util.concurrent.TimeUnit;
-
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by qiang_xi on 2017/4/4 16:45.
  * 策略模式,使用Retrofit进行http/https请求,
  */
 
-class RetrofitStrategy {
-    private static Retrofit mRetrofit;
+final class RetrofitStrategy {
     private static ApiService mApiService;
-    private static OkHttpClient mClient;
 
     static {
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
-            @Override
-            public void log(String message) {
-                Logger.e(message);
-            }
-        });
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        if (mClient == null) {
-            mClient = new OkHttpClient.Builder()
-                    .connectTimeout(15, TimeUnit.SECONDS)
-                    .readTimeout(15, TimeUnit.SECONDS)
-                    .writeTimeout(15, TimeUnit.SECONDS)
-                    .retryOnConnectionFailure(false)
-                    .addInterceptor(loggingInterceptor)
-                    .build();
-        }
-        if (mRetrofit == null) {
-            mRetrofit = new Retrofit.Builder()
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(new RetrofitCallAdapterFactory())
-                    .baseUrl(Api.BASE_URL)
-                    .client(mClient)
-                    .build();
-        }
-        if (mApiService == null) {
-            mApiService = mRetrofit.create(ApiService.class);
-        }
+        mApiService = RetrofitConfig.generateRetrofit().create(ApiService.class);
     }
 
     private RetrofitStrategy() {
@@ -59,12 +24,6 @@ class RetrofitStrategy {
      * 在退出应用时置空这些静态变量,方便JVM回收,避免内存泄漏
      */
     static void shutdown() {
-        if (mClient != null) {
-            mClient = null;
-        }
-        if (mRetrofit != null) {
-            mRetrofit = null;
-        }
         if (mApiService != null) {
             mApiService = null;
         }
