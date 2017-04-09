@@ -25,7 +25,7 @@ public class CaseViewHelper {
      * @param listener  点击刷新按钮的监听
      */
     public static void showNoNetworkView(ViewGroup viewGroup, View.OnClickListener listener) {
-        showCaseView(viewGroup, R.mipmap.ic_launcher, "网络异常", listener);
+        showCaseView(viewGroup, R.drawable.icon_no_network, "网络异常", listener);
     }
 
     /**
@@ -34,7 +34,7 @@ public class CaseViewHelper {
      * @param viewGroup 要在哪个根布局下展示
      */
     public static void showNoResultView(ViewGroup viewGroup) {
-        showCaseView(viewGroup, R.mipmap.ic_launcher, "暂无数据", null);
+        showCaseView(viewGroup, R.drawable.icon_no_result, "暂无数据", null);
     }
 
     /**
@@ -44,7 +44,7 @@ public class CaseViewHelper {
      * @param listener  点击刷新按钮的监听
      */
     public static void showServerErrorView(ViewGroup viewGroup, View.OnClickListener listener) {
-        showCaseView(viewGroup, R.mipmap.ic_launcher, "服务器内部错误", listener);
+        showCaseView(viewGroup, R.drawable.icon_server_error, "服务器异常", listener);
     }
 
     /**

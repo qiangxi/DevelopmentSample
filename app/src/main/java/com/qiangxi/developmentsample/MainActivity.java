@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.qiangxi.developmentsample.base.BaseActivity;
 import com.qiangxi.developmentsample.helper.CaseViewHelper;
-import com.qiangxi.developmentsample.helper.SpHelper;
 import com.qiangxi.developmentsample.helper.ToastHelper;
 import com.qiangxi.developmentsample.net.RequestManager;
 import com.qiangxi.developmentsample.presenter.UserInfoPresenter;
@@ -50,7 +49,7 @@ public class MainActivity extends BaseActivity implements UserInfoPresenter {
     }
 
     protected void initData() {
-        RequestManager.login(SpHelper.getCookie(this), "18894001263", "1234", this);
+//        RequestManager.login(SpHelper.getCookie(this), "18894001263", "1234", this);
     }
 
 
@@ -98,7 +97,7 @@ public class MainActivity extends BaseActivity implements UserInfoPresenter {
     public void onClick() {
         if (!isShow) {
             isShow = true;
-            CaseViewHelper.showNoNetworkView(mActivityMain, new View.OnClickListener() {
+            CaseViewHelper.showServerErrorView(mActivityMain, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     CaseViewHelper.hideCaseView(mActivityMain);

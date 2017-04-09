@@ -6,4 +6,7 @@ package com.qiangxi.developmentsample.helper;
  */
 
 public class AnimationHelper {
+    private AnimationHelper() {
+    }
+
 }
