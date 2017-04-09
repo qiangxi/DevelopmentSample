@@ -108,4 +108,10 @@ public class MainActivity extends BaseActivity implements UserInfoPresenter {
             });
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RequestManager.shutdown();
+    }
 }

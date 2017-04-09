@@ -11,10 +11,17 @@ import retrofit2.Response;
  */
 
 final class RetrofitStrategy {
-    private static ApiService mApiService;
+    private static volatile ApiService mApiService;
 
-    static {
-        mApiService = RetrofitConfig.generateRetrofit().create(ApiService.class);
+    private static ApiService http() {
+        if (mApiService == null) {
+            synchronized (ApiService.class) {
+                if (mApiService == null) {
+                    mApiService = RetrofitConfig.generateRetrofit().create(ApiService.class);
+                }
+            }
+        }
+        return mApiService;
     }
 
     private RetrofitStrategy() {
@@ -30,7 +37,7 @@ final class RetrofitStrategy {
     }
 
     static void login(String cookie, String phoneNumber, String password, final UserInfoPresenter presenter) {
-        RetrofitCall<QueryResult<String>> login = mApiService.getSmsValidateCode(cookie, phoneNumber);
+        RetrofitCall<QueryResult<String>> login = http().getSmsValidateCode(cookie, phoneNumber);
         login.enqueue(new RetrofitCallAdapterFactory.SimpleRetrofitCallback<QueryResult<String>>(presenter) {
             @Override
             public void success(Response<QueryResult<String>> response) {
