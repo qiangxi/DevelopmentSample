@@ -55,42 +55,39 @@ public class MainActivity extends BaseActivity implements UserInfoPresenter {
 
     @Override
     public void userInfoRequestSuccess(String state) {
-        mTextView.setText("userInfoRequestSuccess");
         //数据成功返回
     }
 
     @Override
     public void userInfoRequestFailure(String errorCode) {
         //数据未能成功返回
-        mTextView.setText("userInfoRequestFailure");
     }
 
     @Override
     public void onRequestStart() {
-        mTextView.setText("onRequestStart");
+        //请求开始
         mDialog.show();
     }
 
     @Override
     public void onRequestFinish() {
-        mTextView.setText("onRequestFinish");
+        //请求结束
         mDialog.dismiss();
     }
 
     @Override
     public void serverError(Response<?> response) {
-        mTextView.setText("serverError");
+        //服务器异常
     }
 
     @Override
     public void networkError(IOException e) {
-        mTextView.setText("networkError");
+        //网络异常
     }
 
     @Override
     public void onReLogin() {
         //重新登录,跳转到登录界面
-        mTextView.setText("onReLogin");
     }
 
     @OnClick(R.id.textView)

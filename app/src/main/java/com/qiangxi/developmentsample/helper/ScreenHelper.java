@@ -1,4 +1,4 @@
-package com.qiangxi.developmentsample.utils;
+package com.qiangxi.developmentsample.helper;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,7 +15,7 @@ import android.view.WindowManager;
  * @author 任强强
  *         创建于2016/1/5 20:12
  */
-public class ScreenUtils {
+public class ScreenHelper {
     /**
      * 获取屏幕宽高时用，屏幕宽度的单位为px
      */
@@ -33,7 +33,7 @@ public class ScreenUtils {
      */
     public static final int TYPE_NO_STATUS_BAR = 3;
 
-    private ScreenUtils() {
+    private ScreenHelper() {
     }
 
     /**
