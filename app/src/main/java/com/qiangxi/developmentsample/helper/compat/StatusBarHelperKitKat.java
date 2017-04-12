@@ -70,10 +70,16 @@ final class StatusBarHelperKitKat implements IStatusBar {
         Window window = activity.getWindow();
         //设置Window为透明
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
+        if (hideStatusBarBackground) {
+            //设置window的状态栏不可见
+            int option = View.SYSTEM_UI_FLAG_FULLSCREEN//全屏
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION//内容延伸到状态栏
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY//STICKY模式
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;//更稳定
+            window.getDecorView().setSystemUiVisibility(option);
+        }
         ViewGroup mContentView = (ViewGroup) activity.findViewById(Window.ID_ANDROID_CONTENT);
         View mContentChild = mContentView.getChildAt(0);
-
         //移除已经存在假状态栏则,并且取消它的Margin间距
         removeFakeStatusBarViewIfExist(activity);
         removeMarginTopOfContentChild(mContentChild, getStatusBarHeight(activity));
