@@ -4,7 +4,6 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.location.LocationManager;
 import android.text.TextUtils;
 
 import java.util.List;
@@ -42,20 +41,6 @@ public class AppHelper {
         } catch (PackageManager.NameNotFoundException e) {
             return -1;
         }
-    }
-
-    /**
-     * Gps是否打开 需要
-     * <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"
-     * />权限
-     *
-     * @param context
-     *            the context
-     * @return GPS已打开, 则返回true
-     */
-    public static boolean isGPSOpened(Context context) {
-        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        return lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     /**
