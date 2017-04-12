@@ -6,10 +6,8 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.orhanobut.logger.Logger;
 import com.qiangxi.developmentsample.base.BaseActivity;
 import com.qiangxi.developmentsample.helper.CaseViewHelper;
-import com.qiangxi.developmentsample.helper.LocationHelper;
 import com.qiangxi.developmentsample.helper.ToastHelper;
 import com.qiangxi.developmentsample.net.RequestManager;
 import com.qiangxi.developmentsample.presenter.UserInfoPresenter;
