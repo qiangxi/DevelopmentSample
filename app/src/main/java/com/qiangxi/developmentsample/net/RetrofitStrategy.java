@@ -38,7 +38,7 @@ final class RetrofitStrategy {
 
     static void login(String cookie, String phoneNumber, String password, final UserInfoPresenter presenter) {
         RetrofitCall<QueryResult<String>> login = http().getSmsValidateCode(cookie, phoneNumber);
-        login.enqueue(new RetrofitCallAdapterFactory.SimpleRetrofitCallback<QueryResult<String>>(presenter) {
+        login.enqueue(new SimpleRetrofitCallback<QueryResult<String>>(presenter) {
             @Override
             public void success(Response<QueryResult<String>> response) {
                 QueryResult<String> body = response.body();
