@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <!-- 浅灰色半透明 -->
     <color name="toast_bg_color">#49000000</color>
+    <color name="blue_light">#35A7FF</color>
+    <color name="blue_dark">#4169E1</color>
 </resources>

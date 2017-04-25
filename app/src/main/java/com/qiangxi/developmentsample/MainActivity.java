@@ -2,11 +2,15 @@ package com.qiangxi.developmentsample;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.qiangxi.developmentsample.base.BaseActivity;
+import com.qiangxi.developmentsample.dialog.CenterFloatDialog;
+import com.qiangxi.developmentsample.dialog.DialogConfiguration;
 import com.qiangxi.developmentsample.helper.CaseViewHelper;
 import com.qiangxi.developmentsample.helper.ToastHelper;
 import com.qiangxi.developmentsample.net.RequestManager;
@@ -24,7 +28,7 @@ public class MainActivity extends BaseActivity implements UserInfoPresenter {
     @BindView(R.id.textView)
     TextView mTextView;
     @BindView(R.id.activity_main)
-    RelativeLayout mActivityMain;
+    LinearLayout mActivityMain;
 
     private ProgressDialog mDialog;
     private boolean isShow;
@@ -92,6 +96,34 @@ public class MainActivity extends BaseActivity implements UserInfoPresenter {
 
     @OnClick(R.id.textView)
     public void onClick() {
+        DialogConfiguration configuration = new DialogConfiguration.Builder()
+                .setDialogContent("您已断开网络连接")
+                .setDialogLeftText("不连接")
+                .setDialogRightText("重新连接")
+                .build();
+        final CenterFloatDialog dialog = new CenterFloatDialog();
+        dialog.setConfig(configuration);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setOnLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismissAllowingStateLoss();
+                ToastHelper.show(MainActivity.this, "点击左边按钮");
+            }
+        });
+
+        dialog.setOnRightClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismissAllowingStateLoss();
+                ToastHelper.show(MainActivity.this, "点击右边按钮");
+            }
+        });
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+//        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+//        transaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        dialog.show(transaction, "CenterFloatDialog");
         if (!isShow) {
             isShow = true;
             CaseViewHelper.showServerErrorView(mActivityMain, new View.OnClickListener() {

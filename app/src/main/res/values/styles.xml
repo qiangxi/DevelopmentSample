@@ -8,4 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--展示短文本,蓝色背景TextView风格-->
+    <style name="blueTextViewStyle">
+        <item name="android:background">@drawable/selector_blue_button_bg</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
 </resources>

@@ -94,7 +94,7 @@ public class ToastHelper {
         }
         //底部居中,距离屏幕底部60dp
         mToast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0,
-                (int) ((60 * scale) + 0.5f));
+                (int) ((60 * scale) + 0.5F));
         mToast.setDuration(duration);
         mToast.show();
     }
